@@ -641,7 +641,16 @@ def get_available_transitions() -> List[str]:
         return []
 
     transition_files = []
-    for file_path in transitions_dir.glob("*.mp4"):
+    for file_path in sorted(transitions_dir.glob("*.mp4")):
+        # Skip files that are not real MP4 containers (e.g. a saved HTML error page).
+        try:
+            with open(file_path, "rb") as fh:
+                header = fh.read(12)
+        except OSError:
+            continue
+        if header[4:8] != b"ftyp":
+            logger.warning(f"Ignoring invalid transition file: {file_path.name}")
+            continue
         transition_files.append(str(file_path))
 
     logger.info(f"Found {len(transition_files)} transition files")
