@@ -17,8 +17,19 @@ async def main() -> None:
     conn = await asyncpg.connect(url)
     try:
         if await conn.fetchval("select to_regclass('public.users')"):
-            print("schema already present, skipping")
-            return
+            # The API creates a partial schema on first start. Replace it only
+            # while the database is still empty and init.sql has not been applied.
+            applied = await conn.fetchval(
+                "select 1 from information_schema.columns "
+                "where table_name='users' and column_name='default_font_family'"
+            )
+            if applied:
+                print("schema already present, skipping")
+                return
+            if await conn.fetchval("select count(*) from users"):
+                raise SystemExit("users table has data but old schema; refusing to reset")
+            await conn.execute("drop schema public cascade; create schema public")
+            print("replaced partial empty schema")
         await conn.execute(sql)
         print("schema applied")
     finally:
