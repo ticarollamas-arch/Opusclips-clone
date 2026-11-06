@@ -10,10 +10,8 @@ import { maxVideoUploadBytes, uploadTooLargeMessage } from "@/lib/video-upload";
 const UPLOAD_FRAMING_BYTES = 1024 * 1024;
 
 export const dynamic = "force-dynamic";
-// A multi-gigabyte body can take longer than the platform default to stream
-// through. Keep this within Vercel Pro's 30-minute function limit; self-hosted
-// nginx also needs long upload timeouts (see docs/media-storage.md).
-export const maxDuration = 1800;
+// ALTERADO PARA 60 SEGUNDOS: O plano Hobby da Vercel não permite 1800s.
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const session = await auth.api.getSession({ headers: await headers() });
