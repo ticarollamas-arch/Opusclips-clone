@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency manifests only so app/schema changes don't invalidate deps
 COPY frontend/package.json frontend/pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --ignore-scripts --store-dir /pnpm/store
+# No BuildKit cache mount: Railway requires cache ids prefixed with the service id.
+RUN pnpm install --frozen-lockfile --ignore-scripts --store-dir /pnpm/store
 
 # Development stage
 FROM base AS development

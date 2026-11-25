@@ -49,6 +49,9 @@ COPY src/ ./src/
 COPY fonts/ ./fonts/
 COPY transitions/ ./transitions/
 
+# One-off schema bootstrap for managed Postgres (Railway pre-deploy)
+COPY scripts/apply_init_schema.py scripts/init.sql ./scripts/
+
 # Create necessary directories for video processing
 RUN mkdir -p /app/uploads /app/clips /app/logs /tmp
 
