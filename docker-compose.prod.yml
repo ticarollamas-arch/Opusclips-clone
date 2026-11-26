@@ -34,6 +34,8 @@ x-producao-ia: &producao-ia
   YOUTUBE_DATA_API_KEY: ""
   YOUTUBE_DOWNLOAD_PROVIDER: yt_dlp
   YOUTUBE_METADATA_PROVIDER: yt_dlp
+  # Cookies opcionais (arquivo Netscape) contra o bloqueio "confirme que você não é um robô".
+  YOUTUBE_COOKIES_FILE: ${YOUTUBE_COOKIES_FILE:-}
   SOCIAL_PUBLISHING_ACCESS: "off"
   # Capacidade da VPS: um assinante de R$ 7 não pode consumir horas de CPU.
   PRO_PLAN_MINUTE_LIMIT: ${PRO_PLAN_MINUTE_LIMIT:-120}
@@ -58,6 +60,8 @@ services:
     profiles: ["frontend-local"]
 
   backend:
+    volumes:
+      - ./deploy/vps/cookies:/app/cookies
     environment:
       <<: *producao-ia
       SUPOCLIP_SERVICE: backend
@@ -66,6 +70,8 @@ services:
         condition: service_started
 
   worker:
+    volumes:
+      - ./deploy/vps/cookies:/app/cookies
     environment:
       <<: *producao-ia
       SUPOCLIP_SERVICE: worker
