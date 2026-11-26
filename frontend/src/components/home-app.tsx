@@ -19,7 +19,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { PaymentFailedBanner } from "@/components/payment-failed-banner";
 import { SubscriptionCancelBanner } from "@/components/subscription-cancel-banner";
 import { UpgradeDialog, UpgradeNudge, getUpgradeState, upgradeReasonForError, useBillingPlanText, type UpgradeReason } from "@/components/billing/upgrade-prompt";
-import { getPublicBillingPlans } from "@/lib/billing-plans";
+import { formatBrl, getPublicBillingPlans } from "@/lib/billing-plans";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -845,7 +845,7 @@ function PlanStatusNudge({
       <UpgradeNudge
         className="mt-6"
         title={t("nudge.startTitle")}
-        description={entry ? t("nudge.startDescription", { price: `$${entry.priceMonthly}`, length: formatMinutes(entry.minuteLimit) }) : undefined}
+        description={entry ? t("nudge.startDescription", { price: `R$ ${formatBrl(entry.priceMonthly)}`, length: formatMinutes(entry.minuteLimit) }) : undefined}
         action={t("nudge.seePlans")}
         onAction={() => onUpgrade({ kind: "start" })}
       />

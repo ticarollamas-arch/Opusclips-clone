@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import calendar
 import math
 from typing import Any
@@ -24,6 +24,11 @@ HD_SHORT_SIDE = 720
 SCHEDULING_PLANS = {"scale"}
 # Periods longer than this are annual; their allowance still resets monthly.
 MAX_MONTHLY_PERIOD_DAYS = 32
+# Checkouts (Kiwify, Hotmart) that only notify us by webhook. Access lasts until
+# the paid period ends plus a short grace for a late renewal notice, so a missed
+# cancellation webhook can never keep a plan open forever.
+EXTERNAL_CHECKOUT_PROVIDERS = {"kiwify", "hotmart"}
+EXTERNAL_CHECKOUT_GRACE_DAYS = 3
 
 
 def grants_paid_access(
@@ -232,6 +237,10 @@ class BillingService:
         status = row["subscription_status"]
         provider = row.get("subscription_provider")
         is_paid = grants_paid_access(plan, status, provider)
+        if is_paid and (provider or "").lower() in EXTERNAL_CHECKOUT_PROVIDERS:
+            paid_until = row.get("billing_period_end")
+            if paid_until and paid_until + timedelta(days=EXTERNAL_CHECKOUT_GRACE_DAYS) < now:
+                is_paid = False
 
         common = {
             "monetization_enabled": True,

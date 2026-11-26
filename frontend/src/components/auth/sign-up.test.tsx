@@ -47,4 +47,35 @@ describe("SignUp", () => {
       await screen.findByText("Account created successfully! Signing you in..."),
     ).toBeInTheDocument();
   });
+
+  it("stops loading and explains when the request fails", async () => {
+    vi.mocked(signUp.email).mockRejectedValue(new TypeError("Failed to fetch"));
+    const user = userEvent.setup();
+
+    render(<SignUp />);
+
+    await user.type(screen.getByPlaceholderText("Full Name"), "Jane Admin");
+    await user.type(screen.getByPlaceholderText("Email"), "admin@example.com");
+    await user.type(screen.getByPlaceholderText("Password"), "Password123!");
+    await user.click(screen.getByRole("button", { name: "Sign Up" }));
+
+    expect(await screen.findByText(/Não foi possível criar a conta agora/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign Up" })).toBeEnabled();
+  });
+
+  it("translates a duplicate email error", async () => {
+    vi.mocked(signUp.email).mockResolvedValue({
+      error: { code: "USER_ALREADY_EXISTS", message: "User already exists" },
+    } as never);
+    const user = userEvent.setup();
+
+    render(<SignUp />);
+
+    await user.type(screen.getByPlaceholderText("Full Name"), "Jane Admin");
+    await user.type(screen.getByPlaceholderText("Email"), "admin@example.com");
+    await user.type(screen.getByPlaceholderText("Password"), "Password123!");
+    await user.click(screen.getByRole("button", { name: "Sign Up" }));
+
+    expect(await screen.findByText(/Já existe uma conta com este e-mail/)).toBeInTheDocument();
+  });
 });

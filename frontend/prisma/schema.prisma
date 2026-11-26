@@ -413,6 +413,22 @@ model StripeWebhookEvent {
   @@map("stripe_webhook_events")
 }
 
+/// Kiwify/Hotmart purchase events. `user_id` stays null until an account with
+/// the buyer's email exists; sign-up claims the newest grant for that email.
+model ExternalCheckoutPurchase {
+  event_key        String    @id @db.VarChar(255)
+  provider         String    @db.VarChar(20)
+  event_type       String    @db.VarChar(64)
+  email            String    @db.VarChar(320)
+  action           String    @db.VarChar(20)
+  billing_interval String?   @db.VarChar(10)
+  paid_until       DateTime? @db.Timestamptz
+  user_id          String?
+  created_at       DateTime  @default(now()) @db.Timestamptz
+
+  @@map("external_checkout_purchases")
+}
+
 model RevenueCatWebhookEvent {
   id         String   @id
   type       String

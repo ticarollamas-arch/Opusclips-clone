@@ -62,19 +62,31 @@ export function isBillingInterval(value: unknown): value is BillingInterval {
   return value === "month" || value === "year";
 }
 
+/** "7" -> "7", "3.9" -> "3,90": Brazilian decimal comma for prices shown in reais. */
+export function formatBrl(value: string | number): string {
+  const amount = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(amount)) return String(value);
+  return Number.isInteger(amount) ? String(amount) : amount.toFixed(2).replace(".", ",");
+}
+
+/** The second, higher plan ("Creator") is hidden unless NEXT_PUBLIC_SCALE_PLAN_ENABLED=true. */
+export function scalePlanEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_SCALE_PLAN_ENABLED?.trim().toLowerCase() === "true";
+}
+
 export function getPublicBillingPlans(): PublicBillingPlan[] {
-  const proPriceMonthly = process.env.NEXT_PUBLIC_PRO_PRICE_MONTHLY || "9.99";
-  const proPriceAnnual = process.env.NEXT_PUBLIC_PRO_PRICE_ANNUAL || "99.90";
+  const proPriceMonthly = process.env.NEXT_PUBLIC_PRO_PRICE_MONTHLY || "7";
+  const proPriceAnnual = process.env.NEXT_PUBLIC_PRO_PRICE_ANNUAL || "47";
   const scalePriceMonthly = process.env.NEXT_PUBLIC_SCALE_PRICE_MONTHLY || "24.99";
   const scalePriceAnnual = process.env.NEXT_PUBLIC_SCALE_PRICE_ANNUAL || "249.90";
-  // Mirrors the backend's PRO_/SCALE_PLAN_MINUTE_LIMIT defaults.
-  const proMinutes = parseInt(process.env.NEXT_PUBLIC_PRO_PLAN_MINUTE_LIMIT || "600", 10);
+  // Mirrors the backend's PRO_/SCALE_PLAN_MINUTE_LIMIT (docker-compose.prod.yml).
+  const proMinutes = parseInt(process.env.NEXT_PUBLIC_PRO_PLAN_MINUTE_LIMIT || "120", 10);
   const scaleMinutes = parseInt(process.env.NEXT_PUBLIC_SCALE_PLAN_MINUTE_LIMIT || "1500", 10);
-  // Mirrors the backend's PRO_/SCALE_YOUTUBE_MAX_VIDEO_DURATION defaults.
-  const proYoutubeMinutes = parseInt(process.env.NEXT_PUBLIC_PRO_YOUTUBE_MAX_MINUTES || "90", 10);
+  // Mirrors the backend's MAX_VIDEO_DURATION.
+  const proYoutubeMinutes = parseInt(process.env.NEXT_PUBLIC_PRO_YOUTUBE_MAX_MINUTES || "60", 10);
   const scaleYoutubeMinutes = parseInt(process.env.NEXT_PUBLIC_SCALE_YOUTUBE_MAX_MINUTES || "180", 10);
 
-  return [
+  const plans: PublicBillingPlan[] = [
     {
       id: "pro",
       name: "Pro",
@@ -84,14 +96,14 @@ export function getPublicBillingPlans(): PublicBillingPlan[] {
       resolution: "720p",
       scheduling: false,
       youtubeMaxMinutes: proYoutubeMinutes,
-      description: "For creators who clip consistently each month.",
+      description: "Cortes verticais com legenda para quem posta toda semana.",
       highlights: [
-        `${formatMinutes(proMinutes)} of video every month`,
-        "720p clips",
-        `YouTube videos up to ${formatMinutes(proYoutubeMinutes)}`,
-        "Custom fonts, B-roll and caption templates",
+        `${formatMinutes(proMinutes)} de vídeo por mês`,
+        "Cortes 9:16 em 720p com legenda automática",
+        `Vídeos de até ${formatMinutes(proYoutubeMinutes)}`,
+        "Sem marca d'água · cancele quando quiser",
       ],
-      cta: "Upgrade to Pro",
+      cta: "Assinar o Pro",
       highlighted: true,
     },
     {
@@ -103,17 +115,18 @@ export function getPublicBillingPlans(): PublicBillingPlan[] {
       resolution: "1080p",
       scheduling: true,
       youtubeMaxMinutes: scaleYoutubeMinutes,
-      description: "For creators publishing every day.",
+      description: "Para quem publica todos os dias.",
       highlights: [
-        `${formatMinutes(scaleMinutes)} of video every month`,
-        "Full HD 1080p clips",
-        `YouTube videos up to ${formatMinutes(scaleYoutubeMinutes)}`,
-        "Priority processing",
+        `${formatMinutes(scaleMinutes)} de vídeo por mês`,
+        "Cortes em Full HD 1080p",
+        `Vídeos de até ${formatMinutes(scaleYoutubeMinutes)}`,
+        "Processamento prioritário",
       ],
-      cta: "Upgrade to Creator",
+      cta: "Assinar o Creator",
       highlighted: false,
     },
   ];
+  return scalePlanEnabled() ? plans : plans.filter((plan) => plan.id === "pro");
 }
 
 /** The plan's price for one billing interval, as shown next to "/mo" or "/yr". */
@@ -127,10 +140,9 @@ export function annualFullPrice(plan: PublicBillingPlan): string {
   return Number.isInteger(full) ? String(full) : full.toFixed(2);
 }
 
-/** What an annual plan works out to per month, e.g. "8.33". */
+/** What an annual plan works out to per month, e.g. "3,92" (shown in reais). */
 export function annualMonthlyEquivalent(plan: PublicBillingPlan): string {
-  const monthly = Number(plan.priceAnnual) / 12;
-  return Number.isInteger(monthly) ? String(monthly) : monthly.toFixed(2);
+  return formatBrl(Number(plan.priceAnnual) / 12);
 }
 
 /** How many months of the monthly price an annual plan saves, e.g. 2. */
@@ -143,15 +155,15 @@ export function annualMonthsFree(plan: PublicBillingPlan): number {
 export function formatMinutes(minutes: number): string {
   if (minutes >= 60 && minutes % 60 === 0) {
     const hours = minutes / 60;
-    return `${hours} ${hours === 1 ? "hour" : "hours"}`;
+    return `${hours} ${hours === 1 ? "hora" : "horas"}`;
   }
-  return `${minutes} minutes`;
+  return `${minutes} minutos`;
 }
 
 /** The plan one step above `plan`, or null when there is nothing to upgrade to. */
 export function getNextBillingPlan(plan: string | null | undefined): PublicBillingPlan | null {
   const plans = getPublicBillingPlans();
   if (plan === "scale" || plan === "self_host") return null;
-  if (plan === "pro") return plans.find((candidate) => candidate.id === "scale") ?? null;
+  if (plan === "pro") return plans.find((candidate) => candidate.id === "scale") ?? null; // null when Creator is hidden
   return plans.find((candidate) => candidate.id === "pro") ?? null;
 }

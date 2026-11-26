@@ -9,6 +9,16 @@ import { track } from "@/lib/datafast";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
+/** Better Auth answers in English; show the common cases in Portuguese. */
+const SIGN_UP_ERRORS: Record<string, string> = {
+  USER_ALREADY_EXISTS: "Já existe uma conta com este e-mail. Entre ou redefina a senha.",
+  USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: "Já existe uma conta com este e-mail. Entre ou redefina a senha.",
+  PASSWORD_TOO_SHORT: "A senha precisa ter pelo menos 8 caracteres.",
+  PASSWORD_TOO_LONG: "A senha é longa demais.",
+  INVALID_EMAIL: "Esse e-mail não parece válido.",
+  EMAIL_AND_PASSWORD_SIGN_UP_IS_NOT_ENABLED: "Cadastros estão fechados no momento.",
+};
+
 export function SignUp() {
   const t = useTranslations("auth");
   const [name, setName] = useState("");
@@ -24,14 +34,23 @@ export function SignUp() {
     setMessage("");
     setOk(false);
 
-    const response = await signUp.email({
-      email,
-      password,
-      name,
-    });
+    let response: Awaited<ReturnType<typeof signUp.email>>;
+    try {
+      response = await signUp.email({
+        email: email.trim(),
+        password,
+        name: name.trim(),
+      });
+    } catch {
+      // Network failure or server down: never leave the button spinning.
+      setMessage("Não foi possível criar a conta agora. Verifique sua conexão e tente de novo.");
+      setLoading(false);
+      return;
+    }
 
     if (response.error) {
-      setMessage(response.error.message || t("signUp.failed"));
+      const code = (response.error as { code?: string }).code ?? "";
+      setMessage(SIGN_UP_ERRORS[code] || response.error.message || t("signUp.failed"));
       setLoading(false);
       return;
     }
@@ -59,6 +78,7 @@ export function SignUp() {
           <Input
             className="h-11"
             type="text"
+            autoComplete="name"
             placeholder={t("signUp.name")}
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -68,6 +88,7 @@ export function SignUp() {
           <Input
             className="h-11"
             type="email"
+            autoComplete="email"
             placeholder={t("signUp.email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -77,6 +98,7 @@ export function SignUp() {
           <Input
             className="h-11"
             type="password"
+            autoComplete="new-password"
             placeholder={t("signUp.password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}

@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { monetizationEnabled } from "@/lib/monetization";
 import { getStripeClient } from "@/lib/stripe";
 import Stripe from "stripe";
+import { externalCheckoutEnabled } from "@/server/external-checkout";
 
 const APP_STORE_MANAGED_MESSAGE = "Your subscription is managed through the App Store";
 const PAID_SUBSCRIPTION_STATUSES = new Set(["active", "trialing"]);
@@ -55,6 +56,13 @@ export async function POST() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id || !session.user.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Kiwify / Hotmart subscribers manage or cancel in the buyer area of the platform.
+  if (externalCheckoutEnabled()) {
+    return NextResponse.json({
+      url: process.env.CHECKOUT_CUSTOMER_PORTAL_URL || "https://dashboard.kiwify.com.br/",
+    });
   }
 
   const user = await prisma.user.findUnique({

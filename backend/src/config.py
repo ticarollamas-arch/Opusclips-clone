@@ -24,7 +24,7 @@ class Config:
 
         self.whisper_model = os.getenv("WHISPER_MODEL") or os.getenv("WHISPER_MODEL_SIZE", "base")
         self.transcription_provider = self._normalize_transcription_provider(
-            os.getenv("TRANSCRIPTION_PROVIDER", "assemblyai")
+            os.getenv("TRANSCRIPTION_PROVIDER", "whisper")
         )
         # Empty means auto-detect the spoken language; otherwise an AssemblyAI
         # language code such as "es" or "en_us" forces it.
@@ -189,7 +189,7 @@ class Config:
         self.aws_access_key_id = self._get_optional_env("AWS_ACCESS_KEY_ID")
         self.aws_secret_access_key = self._get_optional_env("AWS_SECRET_ACCESS_KEY")
         self.ses_from_email = os.getenv(
-            "SES_FROM_EMAIL", "SupoClip <onboarding@example.com>"
+            "SES_FROM_EMAIL", "Cortador 9:16 <onboarding@example.com>"
         )
         self.app_base_url = (
             self._get_optional_env("NEXT_PUBLIC_APP_URL") or "http://localhost:3107"
@@ -427,7 +427,7 @@ class Config:
     def _infer_default_llm(self) -> str:
         """
         Infer a usable default model based on whichever API key is present.
-        Falls back to Google for backward compatibility.
+        Falls back to a local Ollama model, so no third-party API is required.
         """
         if self.google_api_key:
             return "google-gla:gemini-3-flash-preview"
@@ -437,7 +437,8 @@ class Config:
             return "anthropic:claude-4-sonnet"
         if self.openrouter_api_key:
             return "openrouter:anthropic/claude-sonnet-5.5"
-        return "google-gla:gemini-3-flash-preview"
+        # No external API key: use a local open-weights model through Ollama.
+        return "ollama:qwen2.5:7b-instruct"
 
 
 def get_config() -> Config:

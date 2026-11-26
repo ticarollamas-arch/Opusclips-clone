@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { useSession } from "@/lib/auth-client";
 import { useSocialAccess } from "@/hooks/use-social-access";
 import {
+  formatBrl,
   annualFullPrice,
   annualMonthlyEquivalent,
   annualMonthsFree,
@@ -523,9 +524,9 @@ export default function SettingsPage() {
                       </span>
                       <span className="mt-1 block text-2xl font-bold tracking-tight">
                         {billingInterval === "year" && annualMonthsFree(plan) > 0 && (
-                          <span className="mr-1.5 text-sm font-normal text-muted-foreground line-through">${annualFullPrice(plan)}</span>
+                          <span className="mr-1.5 text-sm font-normal text-muted-foreground line-through">R$ {formatBrl(annualFullPrice(plan))}</span>
                         )}
-                        ${planPrice(plan, billingInterval)}
+                        R$ {formatBrl(planPrice(plan, billingInterval))}
                         <span className="text-xs font-normal text-muted-foreground">
                           {billingInterval === "year" ? plans.t("perYear") : plans.t("perMonth")}
                         </span>

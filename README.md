@@ -1,10 +1,23 @@
-<p align="center"><img src="assets/banner.svg" alt="SupoClip — cortes virais de vídeos longos com IA" width="100%"></p>
+<p align="center"><img src="assets/banner.svg" alt="Cortador 9:16 — cortes verticais de vídeos longos com IA local" width="100%"></p>
 
-# SupoClip — cortes virais de vídeos longos com IA (cópia auto-hospedável)
+# Cortador 9:16 — cortes verticais de vídeos longos com IA local
 
-Cópia do projeto de código aberto **[SupoClip](https://github.com/FujiwaraChoki/supoclip)**, uma ferramenta que transforma **vídeos longos** (podcasts, palestras, VODs) em **cortes verticais 9:16** prontos para TikTok, Reels e Shorts. Com IA, ela encontra os trechos com mais potencial, dá uma nota de viralidade a cada um e renderiza os clipes com enquadramento no rosto, legendas sincronizadas por palavra, título de abertura e B-roll opcional. É uma alternativa auto-hospedável e sem marca d'água a serviços como o OpusClip.
+Serviço por assinatura (R$ 7/mês ou R$ 47/ano) que transforma **vídeos longos** (podcasts, pregações, aulas, lives) em **cortes verticais 9:16** com legenda automática, prontos para TikTok, Reels e Shorts.
 
-Documentação original em inglês: [README-en.md](README-en.md) e pasta [docs/](docs/README.md).
+Esta versão roda **sem APIs de IA de terceiros**: a transcrição usa Whisper e a escolha dos cortes usa um modelo aberto no Ollama, tudo na própria VPS. O pagamento é feito pela Kiwify ou pela Hotmart.
+
+**Como colocar no ar:** veja [DEPLOY_NOTES.md](DEPLOY_NOTES.md).
+
+Baseado no projeto de código aberto **[SupoClip](https://github.com/FujiwaraChoki/supoclip)** (AGPL-3.0), de FujiwaraChoki e colaboradores. Documentação original em inglês: [README-en.md](README-en.md) e [docs/](docs/README.md).
+
+### O que mudou em relação ao original
+
+- Nome e marca: Cortador 9:16, em português por padrão.
+- IA local por padrão (Whisper + Ollama); B-roll do Pexels, Apify, PostHog e publicação em redes desligados.
+- Cobrança por Kiwify/Hotmart com webhook (`/api/billing/pagamento-webhook`), plano único, preços em reais e limite de minutos por assinante.
+- E-mail de recuperação de senha por SMTP da sua própria caixa.
+- Cadastro consertado na Vercel (o `vercel.json` antigo desviava `/api/auth` para o backend).
+- `docker-compose.prod.yml` para a VPS, com PostgreSQL protegido por senha e TLS, Ollama e Cloudflare Tunnel.
 
 ## Recursos
 

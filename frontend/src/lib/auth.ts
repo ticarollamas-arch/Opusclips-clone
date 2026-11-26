@@ -5,6 +5,7 @@ import { nextCookies } from "better-auth/next-js";
 import { getAuthTrustedOrigins } from "@/lib/auth-origins";
 import { prepareAccountDeletion } from "@/server/account-deletion";
 import { fetchBackend } from "@/server/backend-api";
+import { claimExternalCheckoutPurchases } from "@/server/external-checkout-apply";
 
 const disableSignUp = ["1", "true", "yes"].includes(
   (process.env.DISABLE_SIGN_UP ?? "").toLowerCase()
@@ -53,6 +54,20 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins,
+  databaseHooks: {
+    user: {
+      create: {
+        // Bought on Kiwify/Hotmart before creating the account: apply that purchase now.
+        after: async (user) => {
+          try {
+            await claimExternalCheckoutPurchases(user.id, user.email);
+          } catch (error) {
+            console.error("Failed to claim external checkout purchases", { userId: user.id, error });
+          }
+        },
+      },
+    },
+  },
   emailVerification: {
     sendOnSignUp: false,
     sendOnSignIn: false,

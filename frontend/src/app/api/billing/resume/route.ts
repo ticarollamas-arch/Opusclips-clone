@@ -22,6 +22,13 @@ export async function POST() {
     select: { stripe_subscription_id: true, subscription_provider: true },
   });
 
+  if (user?.subscription_provider === "kiwify" || user?.subscription_provider === "hotmart") {
+    return NextResponse.json(
+      { error: "Para reativar, assine de novo em Configurações > Planos. Seu acesso atual continua até o fim do período pago." },
+      { status: 409 },
+    );
+  }
+
   if (!user?.stripe_subscription_id || user.subscription_provider === "apple") {
     return NextResponse.json({ error: "No Stripe subscription to restart" }, { status: 400 });
   }

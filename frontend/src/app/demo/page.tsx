@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url,
-      siteName: "SupoClip",
+      siteName: "Cortador 9:16",
       type: "website",
       videos: DEMO_CLIPS.map((clip) => ({ url: `${getSiteUrl()}${clip.src}`, width: 540, height: 960, type: "video/mp4" })),
     },
@@ -50,7 +50,7 @@ export default async function DemoPage() {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "SupoClip", item: siteUrl },
+          { "@type": "ListItem", position: 1, name: "Cortador 9:16", item: siteUrl },
           { "@type": "ListItem", position: 2, name: t("demo.badge"), item: `${siteUrl}/demo` },
         ],
       },
@@ -73,8 +73,8 @@ export default async function DemoPage() {
       <header className="border-b bg-background/95">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="SupoClip" width={24} height={24} className="rounded-lg dark:invert" />
-            <span className="text-lg font-bold tracking-tight">SupoClip</span>
+            <Image src="/logo.png" alt="Cortador 9:16" width={24} height={24} className="rounded-lg dark:invert" />
+            <span className="text-lg font-bold tracking-tight">Cortador 9:16</span>
           </Link>
           <nav className="flex items-center gap-2" aria-label={t("chrome.primaryNav")}>
             <Link href="/blog"><Button variant="ghost" size="sm">{t("chrome.blog")}</Button></Link>

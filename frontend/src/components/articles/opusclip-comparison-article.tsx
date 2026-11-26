@@ -18,7 +18,7 @@ const tocIds = ["verdict", "comparison", "pricing", "choose-supoclip", "choose-o
 
 export async function OpusClipComparisonArticle({ post }: { post: BlogPost }) {
   const t = await getTranslations("blog");
-  const [pro, scale] = getPublicBillingPlans();
+  const [pro, scale = pro] = getPublicBillingPlans();
   const slug = "supoclip-vs-opusclip";
   const link = (href: string) => function ArticleLink(chunks: React.ReactNode) {
     return <a href={href}>{chunks}</a>;
@@ -86,7 +86,7 @@ export async function OpusClipComparisonArticle({ post }: { post: BlogPost }) {
           <thead className="bg-muted">
             <tr>
               <th scope="col" className="p-3">{t(`${slug}.comparison.area`)}</th>
-              <th scope="col" className="p-3">SupoClip</th>
+              <th scope="col" className="p-3">Cortador 9:16</th>
               <th scope="col" className="p-3">OpusClip</th>
             </tr>
           </thead>

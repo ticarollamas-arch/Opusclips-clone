@@ -35,10 +35,10 @@
   "maybeLater": "Maybe later",
   "prorated": "You'll confirm the change on Stripe and only pay the prorated difference.",
   "cancelAnytime": "Cancel anytime · Secure checkout with Stripe",
-  "appStore": "Your subscription is managed through the App Store. You can change plans in the SupoClip iOS app.",
+  "appStore": "Your subscription is managed through the App Store. You can change plans in the Cortador 9:16 iOS app.",
   "selfHosted": {
     "title": "Self-hosted",
-    "body": "Run SupoClip on your own computer with no subscription or monthly video limit. Setup required; you provide the hardware and any paid AI services you choose.",
+    "body": "Run Cortador 9:16 on your own computer with no subscription or monthly video limit. Setup required; you provide the hardware and any paid AI services you choose.",
     "guide": "Self-hosting guide"
   },
   "upgrade": {
@@ -101,7 +101,7 @@
   },
   "minutesEach": "{minutes}/mo · {resolution} · up to {length} each",
   "perYear": "/yr",
-  "monthlyEquivalent": "${price}/mo",
+  "monthlyEquivalent": "R$ {price}/mo",
   "interval": {
     "label": "Billing period",
     "monthly": "Monthly",

@@ -1,7 +1,7 @@
 {
   "title": "Pengaturan",
   "intro": "Bawaan untuk generasi baru, notifikasi, dan paketmu.",
-  "languageDescription": "Bahasa yang dipakai di seluruh SupoClip.",
+  "languageDescription": "Bahasa yang dipakai di seluruh Cortador 9:16.",
   "signInRequired": {
     "title": "Perlu masuk",
     "body": "Kamu perlu masuk untuk mengakses pengaturan",
@@ -47,7 +47,7 @@
     "upgrade": "Upgrade",
     "upgradeMultiplier": "Dapatkan {multiplier}× lebih banyak video dengan {plan}",
     "upgradeMore": "Lakukan lebih banyak dengan {plan}",
-    "upgradeDescription": "${price}/bln · {minutes} sebulan · {resolution} · YouTube sampai {length}",
+    "upgradeDescription": "R$ {price}/bln · {minutes} sebulan · {resolution} · YouTube sampai {length}",
     "choose": "Pilih {name}",
     "actionFailed": "Aksi tagihan gagal",
     "usageMinutesOf": "{used} / {limit} mnt",
@@ -60,9 +60,9 @@
     "billedYearly": "ditagih tahunan",
     "upgradeMultiplierHd": "Dapatkan {multiplier}× lebih banyak video dalam {resolution} dengan {plan}",
     "switchYearlyTitle": "Beralih ke tahunan dan dapatkan {count, plural, one {# bulan} other {# bulan}} gratis",
-    "switchYearlyDescription": "${price}/thn, sekitar ${monthly}/bln. Paket yang sama, ditagih setahun sekali.",
+    "switchYearlyDescription": "R$ {price}/thn, sekitar R$ {monthly}/bln. Paket yang sama, ditagih setahun sekali.",
     "switch": "Beralih",
-    "monthlyEquivalentYearly": "${price}/bln, ditagih tahunan"
+    "monthlyEquivalentYearly": "R$ {price}/bln, ditagih tahunan"
   },
   "links": {
     "agentsTitle": "Agen & API",
@@ -70,7 +70,7 @@
     "socialTitle": "Akun sosial",
     "socialDescription": "Hubungkan YouTube, TikTok, dan Instagram untuk memublikasikan clip dan melacak performa",
     "creatorTitle": "Program kreator",
-    "creatorDescription": "Buat video tentang SupoClip, dapatkan Pro gratis dan kode untuk audiensmu"
+    "creatorDescription": "Buat video tentang Cortador 9:16, dapatkan Pro gratis dan kode untuk audiensmu"
   },
   "save": {
     "saved": "Preferensi berhasil disimpan!",
@@ -85,7 +85,7 @@
   },
   "apiKeys": {
     "title": "Agen & API",
-    "intro": "Biarkan Claude, Cursor, dan agen AI lain membuat clip untukmu lewat <brand>server MCP SupoClip</brand>, atau panggil REST API dari kodemu sendiri. Perlakukan kunci seperti kata sandi; kunci memberi akses penuh ke akunmu.",
+    "intro": "Biarkan Claude, Cursor, dan agen AI lain membuat clip untukmu lewat <brand>server MCP Cortador 9:16</brand>, atau panggil REST API dari kodemu sendiri. Perlakukan kunci seperti kata sandi; kunci memberi akses penuh ke akunmu.",
     "docs": {
       "agentTitle": "Hubungkan agen",
       "agentDescription": "Siapkan server MCP di Claude, Cursor, dan klien MCP lain.",
@@ -121,7 +121,7 @@
   },
   "creator": {
     "title": "Program kreator",
-    "intro": "Membuat video tentang SupoClip? Dapatkan kodemu sendiri: audiensmu mendapat <em>diskon 20% untuk 3 bulan pertama</em>, dan kamu mendapat SupoClip Pro gratis.",
+    "intro": "Membuat video tentang Cortador 9:16? Dapatkan kodemu sendiri: audiensmu mendapat <em>diskon 20% untuk 3 bulan pertama</em>, dan kamu mendapat Cortador 9:16 Pro gratis.",
     "howItWorks": "Cara kerjanya",
     "signIn": "Buat akun gratis atau masuk untuk mendaftar program kreator.",
     "createAccount": "Buat akun",
@@ -168,13 +168,13 @@
     },
     "profileLabel": "Tautan profil",
     "profilePlaceholder": "https://www.tiktok.com/@you",
-    "videoLabel": "Video yang kamu buat tentang SupoClip",
+    "videoLabel": "Video yang kamu buat tentang Cortador 9:16",
     "optional": "(opsional)",
     "videoPlaceholder": "https://",
-    "planLabel": "Bagaimana kamu akan mempromosikan SupoClip?",
+    "planLabel": "Bagaimana kamu akan mempromosikan Cortador 9:16?",
     "termsTitle": "Ketentuan program",
     "termSponsored": "Tandai postingan bersponsor sebagaimana mestinya (misalnya #ad).",
-    "termAds": "Jangan pasang iklan atas nama SupoClip atau posting kodemu di situs kupon atau diskon.",
+    "termAds": "Jangan pasang iklan atas nama Cortador 9:16 atau posting kodemu di situs kupon atau diskon.",
     "termOwn": "Jangan pakai kodemu sendiri.",
     "termEnd": "Kami bisa mengakhiri program atau mengeluarkan kreator kapan saja.",
     "agree": "Saya setuju dengan ketentuan program",

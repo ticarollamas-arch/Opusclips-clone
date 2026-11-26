@@ -18,6 +18,7 @@ export function middleware(request: NextRequest) {
     pathname === "/status" ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api/billing/webhook") ||
+    pathname.startsWith("/api/billing/pagamento-webhook") ||
     pathname.startsWith("/ingest/") ||
     // Opt-outs (including mailbox one-click POSTs) must work in every mode.
     pathname === "/email/product-updates/unsubscribe" ||
@@ -28,7 +29,7 @@ export function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/api")) {
     return NextResponse.json(
-      { error: "SupoClip is in landing-page-only mode." },
+      { error: "Cortador 9:16 is in landing-page-only mode." },
       { status: 503 }
     );
   }

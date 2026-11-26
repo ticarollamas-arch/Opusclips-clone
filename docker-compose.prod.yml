@@ -1,0 +1,124 @@
+# Cortador 9:16 — produção na VPS ("nossa própria API").
+#
+# Uso (na VPS):
+#   cp .env.producao.example .env   # e preencha
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# O que este arquivo muda em relação ao docker-compose.yml:
+#   - Transcrição com Whisper local e escolha de cortes com Ollama (modelo aberto),
+#     sem AssemblyAI, OpenAI, Gemini, Claude, Pexels ou Apify.
+#   - Modo pago ligado (SELF_HOST=false) com limite de minutos por assinante.
+#   - Senha do PostgreSQL vinda do .env, com TLS, para o site na Vercel conseguir acessar.
+#   - Serviço do Ollama e do Cloudflare Tunnel (api.SEU-DOMINIO -> backend).
+#   - Container do frontend desligado: o site roda na Vercel.
+
+x-producao-ia: &producao-ia
+  DATABASE_URL: postgresql+asyncpg://supoclip:${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}@postgres:5432/supoclip
+  SELF_HOST: "false"
+  TRANSCRIPTION_PROVIDER: whisper
+  WHISPER_MODEL_SIZE: ${WHISPER_MODEL_SIZE:-small}
+  TRANSCRIPTION_LANGUAGE: ${TRANSCRIPTION_LANGUAGE:-pt}
+  LLM: ${LLM:-ollama:qwen2.5:7b-instruct}
+  RERANK_LLM: ${RERANK_LLM:-}
+  OLLAMA_BASE_URL: http://ollama:11434/v1
+  AI_EDIT_MODEL: ${AI_EDIT_MODEL:-ollama:qwen2.5:7b-instruct}
+  # Nenhuma chave de API de terceiros.
+  ASSEMBLY_AI_API_KEY: ""
+  OPENAI_API_KEY: ""
+  OPENROUTER_API_KEY: ""
+  GOOGLE_API_KEY: ""
+  ANTHROPIC_API_KEY: ""
+  PEXELS_API_KEY: ""
+  APIFY_API_TOKEN: ""
+  POSTHOG_PROJECT_TOKEN: ""
+  YOUTUBE_DATA_API_KEY: ""
+  YOUTUBE_DOWNLOAD_PROVIDER: yt_dlp
+  YOUTUBE_METADATA_PROVIDER: yt_dlp
+  SOCIAL_PUBLISHING_ACCESS: "off"
+  # Capacidade da VPS: um assinante de R$ 7 não pode consumir horas de CPU.
+  PRO_PLAN_MINUTE_LIMIT: ${PRO_PLAN_MINUTE_LIMIT:-120}
+  SCALE_PLAN_MINUTE_LIMIT: ${SCALE_PLAN_MINUTE_LIMIT:-120}
+  MAX_VIDEO_DURATION: ${MAX_VIDEO_DURATION:-3600}
+  PRO_YOUTUBE_MAX_VIDEO_DURATION: ${MAX_VIDEO_DURATION:-3600}
+  SCALE_YOUTUBE_MAX_VIDEO_DURATION: ${MAX_VIDEO_DURATION:-3600}
+  MAX_VIDEO_UPLOAD_BYTES: ${MAX_VIDEO_UPLOAD_BYTES:-2000000000}
+  MAX_CLIPS: ${MAX_CLIPS:-6}
+  FAST_MODE_MAX_CLIPS: ${MAX_CLIPS:-6}
+  NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:?defina NEXT_PUBLIC_APP_URL no .env}
+  CORS_ORIGINS: ${NEXT_PUBLIC_APP_URL}
+  # E-mail pela sua própria caixa (SMTP da hospedagem do domínio).
+  SMTP_HOST: ${SMTP_HOST:-}
+  SMTP_PORT: ${SMTP_PORT:-465}
+  SMTP_USER: ${SMTP_USER:-}
+  SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  SMTP_FROM: ${SMTP_FROM:-}
+
+services:
+  frontend:
+    profiles: ["frontend-local"]
+
+  backend:
+    environment:
+      <<: *producao-ia
+      SUPOCLIP_SERVICE: backend
+    depends_on:
+      ollama:
+        condition: service_started
+
+  worker:
+    environment:
+      <<: *producao-ia
+      SUPOCLIP_SERVICE: worker
+
+  ai-worker:
+    environment:
+      <<: *producao-ia
+      SUPOCLIP_SERVICE: ai-worker
+
+  mcp:
+    profiles: ["mcp"]
+
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+    # TLS com certificado próprio (gerado por deploy/vps/gerar-certificado-postgres.sh).
+    command:
+      - postgres
+      - -c
+      - ssl=on
+      - -c
+      - ssl_cert_file=/certs/server.crt
+      - -c
+      - ssl_key_file=/certs/server.key
+      - -c
+      - password_encryption=scram-sha-256
+    volumes:
+      - ./deploy/vps/certs:/certs:ro
+    ports:
+      # Aberta para o site na Vercel. Proteja com senha forte (o .env exige uma).
+      - "${POSTGRES_PUBLIC_PORT:-5432}:5432"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: cortador-ollama
+    volumes:
+      - ollama_models:/root/.ollama
+    expose:
+      - "11434"
+    restart: unless-stopped
+
+  # Publica o backend em https://api.SEU-DOMINIO sem abrir a porta 8000.
+  # Crie o túnel no painel da Cloudflare apontando para http://backend:8000.
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cortador-cloudflared
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?defina CLOUDFLARE_TUNNEL_TOKEN no .env}
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
+    driver: local

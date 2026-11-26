@@ -12,7 +12,7 @@ import { FeedbackButton } from "@/components/feedback-button";
 import { PostHogIdentity } from "@/components/posthog-identity";
 import { ThemeProvider } from "@/components/theme-provider";
 import { intlLocale } from "@/i18n/config";
-import { APP_STORE_ID, COMPANY_NAME, getSiteUrl } from "@/lib/site";
+import { COMPANY_NAME, getSiteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,21 +47,18 @@ export async function generateMetadata(): Promise<Metadata> {
   },
   description: t("description"),
   metadataBase: new URL(getSiteUrl()),
-  applicationName: "SupoClip",
-  authors: [{ name: "SupoClip Team", url: getSiteUrl() }],
-  creator: "SupoClip Team",
+  applicationName: "Cortador 9:16",
+  authors: [{ name: "Cortador 9:16 Team", url: getSiteUrl() }],
+  creator: "Cortador 9:16 Team",
   publisher: COMPANY_NAME,
   category: t("category"),
   icons: {
     icon: "/icon.png",
   },
-  itunes: {
-    appId: APP_STORE_ID,
-  },
   openGraph: {
     title: t("title"),
     description: t("openGraphDescription"),
-    siteName: "SupoClip",
+    siteName: "Cortador 9:16",
     type: "website",
   },
   twitter: {

@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { monetizationEnabled } from "@/lib/monetization";
 import { getStripeClient } from "@/lib/stripe";
 import { getServerBillingPlan } from "@/server/billing-plans";
+import { externalCheckoutEnabled, externalCheckoutUrl } from "@/server/external-checkout";
 import { isBillingInterval, type BillingInterval } from "@/lib/billing-plans";
 import { findCreatorOffer, INVALID_CREATOR_CODE, type CreatorOffer } from "@/server/affiliates";
 import {
@@ -47,6 +48,16 @@ export async function POST(request: Request) {
     }
   } catch {
     requestedPlan = "pro";
+  }
+
+  // Kiwify / Hotmart: their checkout page, with the account email filled in so
+  // the payment webhook can find this account.
+  if (externalCheckoutEnabled()) {
+    const url = externalCheckoutUrl(interval, { email: session.user.email, name: session.user.name });
+    if (!url) {
+      return NextResponse.json({ error: `Checkout ${interval === "year" ? "anual" : "mensal"} não configurado` }, { status: 500 });
+    }
+    return NextResponse.json({ url });
   }
 
   const billingPlan = getServerBillingPlan(requestedPlan);

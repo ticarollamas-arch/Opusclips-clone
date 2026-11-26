@@ -1,7 +1,7 @@
 {
   "title": "Einstellungen",
   "intro": "Standards für neue Generierungen, Benachrichtigungen und deinen Plan.",
-  "languageDescription": "Die Sprache in SupoClip.",
+  "languageDescription": "Die Sprache in Cortador 9:16.",
   "signInRequired": {
     "title": "Anmeldung nötig",
     "body": "Melde dich an, um deine Einstellungen zu sehen",
@@ -47,7 +47,7 @@
     "upgrade": "Upgraden",
     "upgradeMultiplier": "{multiplier}× mehr Video mit {plan}",
     "upgradeMore": "Mehr mit {plan}",
-    "upgradeDescription": "${price}/Monat · {minutes} pro Monat · {resolution} · YouTube bis {length}",
+    "upgradeDescription": "R$ {price}/Monat · {minutes} pro Monat · {resolution} · YouTube bis {length}",
     "choose": "{name} wählen",
     "actionFailed": "Die Abrechnung konnte nicht geöffnet werden",
     "usageMinutesOf": "{used} / {limit} Min.",
@@ -60,9 +60,9 @@
     "billedYearly": "jährliche Abrechnung",
     "upgradeMultiplierHd": "{multiplier}× mehr Video in {resolution} mit {plan}",
     "switchYearlyTitle": "Wechsle zur jährlichen Abrechnung und erhalte {count, plural, one {# Monat} other {# Monate}} gratis",
-    "switchYearlyDescription": "${price}/Jahr, etwa ${monthly}/Monat. Gleicher Plan, einmal im Jahr abgerechnet.",
+    "switchYearlyDescription": "R$ {price}/Jahr, etwa R$ {monthly}/Monat. Gleicher Plan, einmal im Jahr abgerechnet.",
     "switch": "Wechseln",
-    "monthlyEquivalentYearly": "${price}/Monat, jährlich abgerechnet"
+    "monthlyEquivalentYearly": "R$ {price}/Monat, jährlich abgerechnet"
   },
   "links": {
     "agentsTitle": "Agenten & API",
@@ -70,7 +70,7 @@
     "socialTitle": "Social-Konten",
     "socialDescription": "Verbinde YouTube, TikTok und Instagram, um Clips zu veröffentlichen und die Performance zu sehen",
     "creatorTitle": "Creator-Programm",
-    "creatorDescription": "Mach Videos über SupoClip, bekomm Pro kostenlos und einen Code für dein Publikum"
+    "creatorDescription": "Mach Videos über Cortador 9:16, bekomm Pro kostenlos und einen Code für dein Publikum"
   },
   "save": {
     "saved": "Einstellungen gespeichert!",
@@ -85,7 +85,7 @@
   },
   "apiKeys": {
     "title": "Agenten & API",
-    "intro": "Lass Claude, Cursor und andere KI-Agenten Videos für dich schneiden, über den <brand>SupoClip-MCP-Server</brand>, oder ruf die REST-API aus deinem Code auf. Behandle Schlüssel wie Passwörter: Sie geben vollen Zugriff auf dein Konto.",
+    "intro": "Lass Claude, Cursor und andere KI-Agenten Videos für dich schneiden, über den <brand>Cortador 9:16-MCP-Server</brand>, oder ruf die REST-API aus deinem Code auf. Behandle Schlüssel wie Passwörter: Sie geben vollen Zugriff auf dein Konto.",
     "docs": {
       "agentTitle": "Einen Agenten verbinden",
       "agentDescription": "Richte den MCP-Server in Claude, Cursor und anderen MCP-Clients ein.",
@@ -121,7 +121,7 @@
   },
   "creator": {
     "title": "Creator-Programm",
-    "intro": "Du machst Videos über SupoClip? Hol dir deinen Code: Dein Publikum bekommt <em>20 % Rabatt auf die ersten 3 Monate</em>, und du bekommst SupoClip Pro kostenlos.",
+    "intro": "Du machst Videos über Cortador 9:16? Hol dir deinen Code: Dein Publikum bekommt <em>20 % Rabatt auf die ersten 3 Monate</em>, und du bekommst Cortador 9:16 Pro kostenlos.",
     "howItWorks": "So funktioniert's",
     "signIn": "Erstelle ein kostenloses Konto oder melde dich an, um dich für das Creator-Programm zu bewerben.",
     "createAccount": "Konto erstellen",
@@ -168,13 +168,13 @@
     },
     "profileLabel": "Profil-Link",
     "profilePlaceholder": "https://www.tiktok.com/@you",
-    "videoLabel": "Ein Video, das du über SupoClip gemacht hast",
+    "videoLabel": "Ein Video, das du über Cortador 9:16 gemacht hast",
     "optional": "(optional)",
     "videoPlaceholder": "https://",
-    "planLabel": "Wie willst du SupoClip bewerben?",
+    "planLabel": "Wie willst du Cortador 9:16 bewerben?",
     "termsTitle": "Programmbedingungen",
     "termSponsored": "Kennzeichne gesponserte Posts (zum Beispiel #ad).",
-    "termAds": "Schalt keine Anzeigen auf den Namen SupoClip und stell deinen Code nicht auf Gutschein- oder Deal-Seiten.",
+    "termAds": "Schalt keine Anzeigen auf den Namen Cortador 9:16 und stell deinen Code nicht auf Gutschein- oder Deal-Seiten.",
     "termOwn": "Nutze nicht deinen eigenen Code.",
     "termEnd": "Wir können das Programm beenden oder einen Creator jederzeit entfernen.",
     "agree": "Ich stimme den Programmbedingungen zu",

@@ -178,6 +178,20 @@ CREATE TABLE revenuecat_webhook_events (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE external_checkout_purchases (
+    event_key VARCHAR(255) PRIMARY KEY,
+    provider VARCHAR(20) NOT NULL,
+    event_type VARCHAR(64) NOT NULL,
+    email VARCHAR(320) NOT NULL,
+    action VARCHAR(20) NOT NULL,
+    billing_interval VARCHAR(10),
+    paid_until TIMESTAMP WITH TIME ZONE,
+    user_id TEXT,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX ix_external_checkout_purchases_email
+    ON external_checkout_purchases (lower(email), created_at);
+
 CREATE TABLE app_settings (
     setting_key VARCHAR(100) PRIMARY KEY,
     encrypted_value TEXT NOT NULL,
