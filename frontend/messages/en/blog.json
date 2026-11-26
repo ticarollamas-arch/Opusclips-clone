@@ -65,7 +65,7 @@
       "p1": "Choosing an AI video clipper is also choosing how much control you keep over your production process. If you want to turn podcasts, interviews, talks, and stream recordings into short videos, Cortador 9:16 makes a compelling case: AI-assisted editing with source code you can inspect and a workflow you can run yourself.",
       "p2": "Our verdict: Cortador 9:16 is the better alternative for creators, agencies, and developers who prioritize open source, self-hosting, and customization. This is a comparison by the Cortador 9:16 team, based on documented capabilities, rather than a benchmark of clip quality or processing speed.",
       "whatSupoclip": "What is Cortador 9:16?",
-      "whatSupoclipBody": "Cortador 9:16 is an open-source AI video clipping tool available through supoclip.com or as a self-hosted application. It analyzes long videos, selects promising moments, and produces vertical clips with face-centered cropping and word-synced subtitles. Hook titles, clip scoring, and optional B-roll help turn a raw recording into material ready for your final review. The <repo>Cortador 9:16 repository</repo> documents the features and setup.",
+      "whatSupoclipBody": "Cortador 9:16 is an open-source AI video clipping tool available through cortador916-app.vercel.app or as a self-hosted application. It analyzes long videos, selects promising moments, and produces vertical clips with face-centered cropping and word-synced subtitles. Hook titles, clip scoring, and optional B-roll help turn a raw recording into material ready for your final review. The <repo>Cortador 9:16 repository</repo> documents the features and setup.",
       "whatSupo": "What is supo.live?",
       "whatSupoBody": "Supo.live markets a hosted clipping service for both recordings and ongoing broadcasts. Its homepage advertises live clipping, styled captions, face tracking, a browser editor, and scheduled posting to TikTok, YouTube Shorts, and X. That makes live publishing its clearest point of distinction. See the <site>official supo.live feature overview</site>."
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "Sources",
       "opus": "OpusClip help center: <plans>Plans and credits</plans> and <watermark>Watermark</watermark>. Plans can change; confirm current details on <site>opus.pro</site>.",
-      "supoclip": "Cortador 9:16: <repo>public repository</repo>, including <compose>docker-compose.yml</compose>, <config>configuration docs</config>, and <billing>billing rules</billing>. Hosted prices are from the pricing section of supoclip.com."
+      "supoclip": "Cortador 9:16: <repo>public repository</repo>, including <compose>docker-compose.yml</compose>, <config>configuration docs</config>, and <billing>billing rules</billing>. Hosted prices are from the pricing section of cortador916-app.vercel.app."
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "Create your account, then set DISABLE_SIGN_UP=true and recreate the frontend container. Compose binds every port to 127.0.0.1, so nothing is public until you add a reverse proxy."
       }
     },
-    "intro": "Cortador 9:16 is the open-source AI video clipper behind the hosted app at supoclip.com. The same repository ships a Docker Compose stack you can run on a laptop, a home server, or a VPS. This guide follows that stack exactly as it exists in the <repo>repository</repo>. Where a step depends on your provider or hardware, we say so instead of guessing.",
+    "intro": "Cortador 9:16 is the open-source AI video clipper behind the hosted app at cortador916-app.vercel.app. The same repository ships a Docker Compose stack you can run on a laptop, a home server, or a VPS. This guide follows that stack exactly as it exists in the <repo>repository</repo>. Where a step depends on your provider or hardware, we say so instead of guessing.",
     "introChoice": "Prefer not to run infrastructure? The <hosted>hosted app</hosted> runs the same pipeline. Still deciding between tools? Read our <comparison>Cortador 9:16 vs OpusClip comparison</comparison> first.",
     "stack": {
       "heading": "What you are running",

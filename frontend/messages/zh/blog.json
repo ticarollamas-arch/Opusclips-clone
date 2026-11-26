@@ -65,7 +65,7 @@
       "p1": "选择 AI 视频剪辑工具，也是在选择你对制作过程保留多少控制。如果你想把播客、访谈、演讲和直播录像做成短视频，Cortador 9:16 的理由很直接：AI 辅助剪辑，源码可以查看，流程可以自己跑。",
       "p2": "我们的结论：对把开源、自托管和定制放在前面的创作者、机构和开发者来说，Cortador 9:16 是更好的选择。这是 Cortador 9:16 团队基于已写明能力做的对比，不是短片质量或处理速度的基准测试。",
       "whatSupoclip": "什么是 Cortador 9:16？",
-      "whatSupoclipBody": "Cortador 9:16 是开源的 AI 视频剪辑工具，可通过 supoclip.com 使用，也可以作为自托管应用。它分析长视频，选出有潜力的时刻，并做出以人脸为中心裁切、逐词同步字幕的竖屏短片。钩子标题、短片评分和可选的 B-roll 帮助把原始录像变成可供你最终审看的素材。<repo>Cortador 9:16 仓库</repo>写明了功能和安装。",
+      "whatSupoclipBody": "Cortador 9:16 是开源的 AI 视频剪辑工具，可通过 cortador916-app.vercel.app 使用，也可以作为自托管应用。它分析长视频，选出有潜力的时刻，并做出以人脸为中心裁切、逐词同步字幕的竖屏短片。钩子标题、短片评分和可选的 B-roll 帮助把原始录像变成可供你最终审看的素材。<repo>Cortador 9:16 仓库</repo>写明了功能和安装。",
       "whatSupo": "什么是 supo.live？",
       "whatSupoBody": "supo.live 推广的是面向录像和正在进行的直播的托管剪辑服务。它的首页宣传直播剪辑、样式字幕、人脸跟踪、浏览器编辑器，以及定时发布到 TikTok、YouTube Shorts 和 X。因此直播发布是它最清楚的区别。请看 <site>supo.live 官方功能概览</site>。"
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "来源",
       "opus": "OpusClip 帮助中心：<plans>方案与额度</plans>和<watermark>水印</watermark>。方案可能变化；请在 <site>opus.pro</site> 确认当前细节。",
-      "supoclip": "Cortador 9:16：<repo>公开仓库</repo>，包括 <compose>docker-compose.yml</compose>、<config>配置文档</config>和<billing>计费规则</billing>。托管价格来自 supoclip.com 的定价部分。"
+      "supoclip": "Cortador 9:16：<repo>公开仓库</repo>，包括 <compose>docker-compose.yml</compose>、<config>配置文档</config>和<billing>计费规则</billing>。托管价格来自 cortador916-app.vercel.app 的定价部分。"
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "先创建账号，再设置 DISABLE_SIGN_UP=true 并重建 frontend 容器。Compose 把每个端口绑在 127.0.0.1 上，所以在你加上反向代理之前，外面都访问不到。"
       }
     },
-    "intro": "Cortador 9:16 是 supoclip.com 托管应用背后的开源 AI 视频剪辑工具。同一个仓库带有一套 Docker Compose 栈，可以跑在笔记本、家用服务器或 VPS 上。本指南严格按照它在<repo>仓库</repo>里的样子来写。某一步取决于你的提供方或硬件时，我们会说出来，而不是猜测。",
+    "intro": "Cortador 9:16 是 cortador916-app.vercel.app 托管应用背后的开源 AI 视频剪辑工具。同一个仓库带有一套 Docker Compose 栈，可以跑在笔记本、家用服务器或 VPS 上。本指南严格按照它在<repo>仓库</repo>里的样子来写。某一步取决于你的提供方或硬件时，我们会说出来，而不是猜测。",
     "introChoice": "不想自己跑基础设施？<hosted>托管应用</hosted>跑的是同一套流程。还在工具之间犹豫？先读我们的<comparison>Cortador 9:16 与 OpusClip 对比</comparison>。",
     "stack": {
       "heading": "你正在运行什么",

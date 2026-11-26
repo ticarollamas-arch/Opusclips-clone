@@ -65,7 +65,7 @@
       "p1": "Escolher um cortador de vídeo com IA também é escolher quanto controle você mantém sobre o processo de produção. Se você quer transformar podcasts, entrevistas, palestras e gravações de transmissões em vídeos curtos, o Cortador 9:16 faz um caso claro: edição com IA, código que você pode inspecionar e um fluxo que você mesmo roda.",
       "p2": "Nosso veredito: o Cortador 9:16 é a melhor alternativa para criadores, agências e desenvolvedores que priorizam código aberto, auto-hospedagem e personalização. Esta comparação é da equipe do Cortador 9:16, com base em capacidades documentadas, e não um teste de qualidade de clipes nem de velocidade de processamento.",
       "whatSupoclip": "O que é o Cortador 9:16?",
-      "whatSupoclipBody": "O Cortador 9:16 é uma ferramenta de corte de vídeo com IA de código aberto, disponível em supoclip.com ou como aplicativo auto-hospedado. Ele analisa vídeos longos, escolhe momentos promissores e produz clipes verticais com corte centrado no rosto e legendas sincronizadas por palavra. Títulos de gancho, pontuação de clipes e B-roll opcional ajudam a transformar uma gravação bruta em material pronto para a sua revisão final. O <repo>repositório do Cortador 9:16</repo> documenta os recursos e a instalação.",
+      "whatSupoclipBody": "O Cortador 9:16 é uma ferramenta de corte de vídeo com IA de código aberto, disponível em cortador916-app.vercel.app ou como aplicativo auto-hospedado. Ele analisa vídeos longos, escolhe momentos promissores e produz clipes verticais com corte centrado no rosto e legendas sincronizadas por palavra. Títulos de gancho, pontuação de clipes e B-roll opcional ajudam a transformar uma gravação bruta em material pronto para a sua revisão final. O <repo>repositório do Cortador 9:16</repo> documenta os recursos e a instalação.",
       "whatSupo": "O que é o supo.live?",
       "whatSupoBody": "O supo.live divulga um serviço de corte hospedado tanto para gravações quanto para transmissões em andamento. A página inicial anuncia corte ao vivo, legendas estilizadas, rastreamento de rosto, um editor no navegador e publicações agendadas no TikTok, YouTube Shorts e X. Isso torna a publicação ao vivo o ponto de diferença mais claro. Veja o <site>resumo oficial de recursos do supo.live</site>."
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "Fontes",
       "opus": "Centro de ajuda do OpusClip: <plans>Planos e créditos</plans> e <watermark>Marca d'água</watermark>. Os planos podem mudar; confirme os detalhes atuais em <site>opus.pro</site>.",
-      "supoclip": "Cortador 9:16: <repo>repositório público</repo>, incluindo <compose>docker-compose.yml</compose>, <config>documentação de configuração</config> e <billing>regras de cobrança</billing>. Os preços hospedados vêm da seção de preços de supoclip.com."
+      "supoclip": "Cortador 9:16: <repo>repositório público</repo>, incluindo <compose>docker-compose.yml</compose>, <config>documentação de configuração</config> e <billing>regras de cobrança</billing>. Os preços hospedados vêm da seção de preços de cortador916-app.vercel.app."
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "Crie sua conta, depois defina DISABLE_SIGN_UP=true e recrie o contêiner do frontend. O Compose prende cada porta a 127.0.0.1, então nada fica público até você adicionar um proxy reverso."
       }
     },
-    "intro": "O Cortador 9:16 é o cortador de vídeo com IA de código aberto por trás do app hospedado em supoclip.com. O mesmo repositório traz uma pilha Docker Compose que você pode rodar num laptop, num servidor de casa ou num VPS. Este guia segue essa pilha exatamente como ela existe no <repo>repositório</repo>. Quando um passo depende do seu provedor ou do hardware, dizemos isso em vez de adivinhar.",
+    "intro": "O Cortador 9:16 é o cortador de vídeo com IA de código aberto por trás do app hospedado em cortador916-app.vercel.app. O mesmo repositório traz uma pilha Docker Compose que você pode rodar num laptop, num servidor de casa ou num VPS. Este guia segue essa pilha exatamente como ela existe no <repo>repositório</repo>. Quando um passo depende do seu provedor ou do hardware, dizemos isso em vez de adivinhar.",
     "introChoice": "Prefere não operar infraestrutura? O <hosted>app hospedado</hosted> roda o mesmo processo. Ainda escolhendo entre ferramentas? Leia primeiro a nossa <comparison>comparação Cortador 9:16 versus OpusClip</comparison>.",
     "stack": {
       "heading": "O que você está executando",

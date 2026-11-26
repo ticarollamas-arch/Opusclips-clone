@@ -65,7 +65,7 @@
       "p1": "Ein KI-Video-Clipper zu wählen heißt auch, zu wählen, wie viel Kontrolle du über die Produktion behältst. Wenn du Podcasts, Interviews, Vorträge und Stream-Aufnahmen zu Kurzvideos machen willst, spricht viel für Cortador 9:16: KI-gestützter Schnitt mit Quellcode, den du ansehen kannst, und einem Ablauf, den du selbst betreibst.",
       "p2": "Unser Fazit: Cortador 9:16 ist die bessere Alternative für Creator, Agenturen und Entwicklerinnen und Entwickler, denen Open Source, Self-Hosting und Anpassung wichtig sind. Das ist ein Vergleich des Cortador 9:16-Teams anhand dokumentierter Funktionen, kein Benchmark für Clip-Qualität oder Tempo.",
       "whatSupoclip": "Was ist Cortador 9:16?",
-      "whatSupoclipBody": "Cortador 9:16 ist ein Open-Source-KI-Video-Clipper über supoclip.com oder als selbst gehostete Anwendung. Es analysiert lange Videos, wählt vielversprechende Momente und erzeugt vertikale Clips mit gesichtsbezogenem Ausschnitt und wortgenauen Untertiteln. Hook-Titel, Clip-Bewertung und optionales B-Roll helfen, aus einer Rohaufnahme Material für deine letzte Prüfung zu machen. Das <repo>Cortador 9:16-Repository</repo> dokumentiert Funktionen und Setup.",
+      "whatSupoclipBody": "Cortador 9:16 ist ein Open-Source-KI-Video-Clipper über cortador916-app.vercel.app oder als selbst gehostete Anwendung. Es analysiert lange Videos, wählt vielversprechende Momente und erzeugt vertikale Clips mit gesichtsbezogenem Ausschnitt und wortgenauen Untertiteln. Hook-Titel, Clip-Bewertung und optionales B-Roll helfen, aus einer Rohaufnahme Material für deine letzte Prüfung zu machen. Das <repo>Cortador 9:16-Repository</repo> dokumentiert Funktionen und Setup.",
       "whatSupo": "Was ist supo.live?",
       "whatSupoBody": "Supo.live bewirbt einen gehosteten Clipping-Dienst für Aufnahmen und laufende Sendungen. Die Startseite wirbt mit Live-Clipping, gestalteten Untertiteln, Gesichtsverfolgung, einem Browser-Editor und geplanten Posts auf TikTok, YouTube Shorts und X. Damit ist Live-Veröffentlichung der klarste Unterschied. Sieh dir die <site>offizielle Funktionsübersicht von supo.live</site> an."
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "Quellen",
       "opus": "Hilfe-Center von OpusClip: <plans>Pläne und Credits</plans> und <watermark>Wasserzeichen</watermark>. Pläne können sich ändern; aktuelle Details auf <site>opus.pro</site> prüfen.",
-      "supoclip": "Cortador 9:16: <repo>öffentliches Repository</repo>, darunter <compose>docker-compose.yml</compose>, <config>Konfigurationsdoku</config> und <billing>Abrechnungsregeln</billing>. Die gehosteten Preise stammen aus dem Preisbereich von supoclip.com."
+      "supoclip": "Cortador 9:16: <repo>öffentliches Repository</repo>, darunter <compose>docker-compose.yml</compose>, <config>Konfigurationsdoku</config> und <billing>Abrechnungsregeln</billing>. Die gehosteten Preise stammen aus dem Preisbereich von cortador916-app.vercel.app."
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "Erstelle dein Konto, setze dann DISABLE_SIGN_UP=true und erstelle den Frontend-Container neu. Compose bindet jeden Port an 127.0.0.1, deshalb ist nichts öffentlich, bis du einen Reverse-Proxy davorstellst."
       }
     },
-    "intro": "Cortador 9:16 ist der Open-Source-KI-Video-Clipper hinter der gehosteten App auf supoclip.com. Dasselbe Repository liefert einen Docker-Compose-Stack, den du auf einem Laptop, einem Heimserver oder einem VPS laufen lassen kannst. Diese Anleitung folgt dem Stack genau so, wie er im <repo>Repository</repo> liegt. Wenn ein Schritt von deinem Anbieter oder deiner Hardware abhängt, sagen wir das, statt zu raten.",
+    "intro": "Cortador 9:16 ist der Open-Source-KI-Video-Clipper hinter der gehosteten App auf cortador916-app.vercel.app. Dasselbe Repository liefert einen Docker-Compose-Stack, den du auf einem Laptop, einem Heimserver oder einem VPS laufen lassen kannst. Diese Anleitung folgt dem Stack genau so, wie er im <repo>Repository</repo> liegt. Wenn ein Schritt von deinem Anbieter oder deiner Hardware abhängt, sagen wir das, statt zu raten.",
     "introChoice": "Du willst keine Infrastruktur betreiben? Die <hosted>gehostete App</hosted> nutzt dieselbe Pipeline. Noch unsicher bei den Tools? Lies zuerst unseren <comparison>Vergleich Cortador 9:16 gegen OpusClip</comparison>.",
     "stack": {
       "heading": "Was du gerade startest",

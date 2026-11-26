@@ -77,7 +77,7 @@ export async function SelfHostingGuideArticle({ post }: { post: BlogPost }) {
       <h2 id="install">{t(`${slug}.install.heading`)}</h2>
       <h3>{t(`${slug}.install.clone`)}</h3>
       <CodeBlock label={t(`${slug}.install.labelTerminal`)}>{`
-git clone https://github.com/FujiwaraChoki/supoclip.git
+git clone https://github.com/ticarollamas-arch/Opusclips-clone.git
 cd supoclip
 cp .env.example .env
 `}</CodeBlock>

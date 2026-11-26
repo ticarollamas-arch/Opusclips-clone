@@ -576,7 +576,7 @@ export default function LandingPage() {
               </div>
               <pre className="overflow-x-auto p-6 font-mono text-[13px] leading-8">
                 <code>
-                  <span className="text-muted-foreground">$ </span>git clone https://github.com/FujiwaraChoki/supoclip{"\n"}
+                  <span className="text-muted-foreground">$ </span>git clone https://github.com/ticarollamas-arch/Opusclips-clone{"\n"}
                   <span className="text-muted-foreground">$ </span>cd supoclip && cp .env.example .env{"\n"}
                   <span className="text-muted-foreground">{t("openSource.comment")}</span>{"\n"}
                   <span className="text-muted-foreground">$ </span>docker compose up -d --build{"\n"}

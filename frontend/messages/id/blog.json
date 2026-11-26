@@ -65,7 +65,7 @@
       "p1": "Memilih AI video clipper juga berarti memilih seberapa banyak kendali yang kamu simpan atas proses produksimu. Kalau kamu ingin mengubah podcast, wawancara, talk, dan rekaman siaran jadi video pendek, Cortador 9:16 punya alasan yang kuat: edit berbantuan AI dengan kode sumber yang bisa kamu periksa dan alur kerja yang bisa kamu jalankan sendiri.",
       "p2": "Putusan kami: Cortador 9:16 adalah alternatif yang lebih baik untuk kreator, agensi, dan developer yang mengutamakan open source, host sendiri, dan kustomisasi. Ini perbandingan dari tim Cortador 9:16, berdasarkan kemampuan yang terdokumentasi, bukan tolok ukur kualitas clip atau kecepatan pemrosesan.",
       "whatSupoclip": "Apa itu Cortador 9:16?",
-      "whatSupoclipBody": "Cortador 9:16 adalah alat AI video clipping open source yang tersedia lewat supoclip.com atau sebagai aplikasi yang di-host sendiri. Cortador 9:16 menganalisis video panjang, memilih momen yang menjanjikan, dan menghasilkan clip vertikal dengan crop yang berpusat pada wajah serta subtitle yang sinkron per kata. Judul hook, penilaian clip, dan B-roll opsional membantu mengubah rekaman mentah jadi materi yang siap untuk tinjauan akhirmu. <repo>Repositori Cortador 9:16</repo> mendokumentasikan fitur dan penyiapannya.",
+      "whatSupoclipBody": "Cortador 9:16 adalah alat AI video clipping open source yang tersedia lewat cortador916-app.vercel.app atau sebagai aplikasi yang di-host sendiri. Cortador 9:16 menganalisis video panjang, memilih momen yang menjanjikan, dan menghasilkan clip vertikal dengan crop yang berpusat pada wajah serta subtitle yang sinkron per kata. Judul hook, penilaian clip, dan B-roll opsional membantu mengubah rekaman mentah jadi materi yang siap untuk tinjauan akhirmu. <repo>Repositori Cortador 9:16</repo> mendokumentasikan fitur dan penyiapannya.",
       "whatSupo": "Apa itu supo.live?",
       "whatSupoBody": "Supo.live memasarkan layanan clipping yang di-host untuk rekaman maupun siaran yang sedang berlangsung. Halaman utamanya mengiklankan clipping langsung, caption bergaya, pelacakan wajah, editor browser, dan posting terjadwal ke TikTok, YouTube Shorts, dan X. Itu membuat publikasi langsung menjadi pembeda yang paling jelas. Lihat <site>ringkasan fitur resmi supo.live</site>."
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "Sumber",
       "opus": "Pusat bantuan OpusClip: <plans>Paket dan kredit</plans> serta <watermark>Watermark</watermark>. Paket bisa berubah; konfirmasi detail terkini di <site>opus.pro</site>.",
-      "supoclip": "Cortador 9:16: <repo>repositori publik</repo>, termasuk <compose>docker-compose.yml</compose>, <config>dokumen konfigurasi</config>, dan <billing>aturan tagihan</billing>. Harga yang di-host berasal dari bagian harga di supoclip.com."
+      "supoclip": "Cortador 9:16: <repo>repositori publik</repo>, termasuk <compose>docker-compose.yml</compose>, <config>dokumen konfigurasi</config>, dan <billing>aturan tagihan</billing>. Harga yang di-host berasal dari bagian harga di cortador916-app.vercel.app."
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "Buat akunmu, lalu atur DISABLE_SIGN_UP=true dan buat ulang kontainer frontend. Compose mengikat setiap port ke 127.0.0.1, jadi tidak ada yang publik sampai kamu menambahkan reverse proxy."
       }
     },
-    "intro": "Cortador 9:16 adalah AI video clipper open source di balik aplikasi yang di-host di supoclip.com. Repositori yang sama menyertakan stack Docker Compose yang bisa kamu jalankan di laptop, server rumah, atau VPS. Panduan ini mengikuti stack itu persis seperti yang ada di <repo>repositori</repo>. Kalau sebuah langkah bergantung pada penyedia atau perangkatmu, kami mengatakannya alih-alih menebak.",
+    "intro": "Cortador 9:16 adalah AI video clipper open source di balik aplikasi yang di-host di cortador916-app.vercel.app. Repositori yang sama menyertakan stack Docker Compose yang bisa kamu jalankan di laptop, server rumah, atau VPS. Panduan ini mengikuti stack itu persis seperti yang ada di <repo>repositori</repo>. Kalau sebuah langkah bergantung pada penyedia atau perangkatmu, kami mengatakannya alih-alih menebak.",
     "introChoice": "Lebih suka tidak menjalankan infrastruktur? <hosted>Aplikasi yang di-host</hosted> menjalankan pipeline yang sama. Masih memilih alat? Baca <comparison>perbandingan Cortador 9:16 vs OpusClip</comparison> kami dulu.",
     "stack": {
       "heading": "Yang sedang kamu jalankan",

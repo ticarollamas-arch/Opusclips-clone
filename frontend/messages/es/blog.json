@@ -65,7 +65,7 @@
       "p1": "Elegir un recortador de video con IA también es elegir cuánto control conservas sobre tu proceso de producción. Si quieres convertir pódcasts, entrevistas, charlas y grabaciones de transmisiones en videos cortos, Cortador 9:16 tiene un argumento claro: edición asistida por IA con código que puedes inspeccionar y un flujo que puedes ejecutar tú.",
       "p2": "Nuestro veredicto: Cortador 9:16 es la mejor alternativa para creadores, agencias y desarrolladores que priorizan el código abierto, el autoalojamiento y la personalización. Esta comparación la hace el equipo de Cortador 9:16 a partir de capacidades documentadas, no es una prueba de calidad de clips ni de velocidad de procesamiento.",
       "whatSupoclip": "¿Qué es Cortador 9:16?",
-      "whatSupoclipBody": "Cortador 9:16 es una herramienta de recorte de video con IA de código abierto, disponible en supoclip.com o como aplicación autoalojada. Analiza videos largos, elige momentos prometedores y produce clips verticales con recorte centrado en el rostro y subtítulos sincronizados por palabra. Los títulos de gancho, el puntaje de clips y el B-roll opcional ayudan a convertir una grabación en bruto en material listo para tu revisión final. El <repo>repositorio de Cortador 9:16</repo> documenta las funciones y la instalación.",
+      "whatSupoclipBody": "Cortador 9:16 es una herramienta de recorte de video con IA de código abierto, disponible en cortador916-app.vercel.app o como aplicación autoalojada. Analiza videos largos, elige momentos prometedores y produce clips verticales con recorte centrado en el rostro y subtítulos sincronizados por palabra. Los títulos de gancho, el puntaje de clips y el B-roll opcional ayudan a convertir una grabación en bruto en material listo para tu revisión final. El <repo>repositorio de Cortador 9:16</repo> documenta las funciones y la instalación.",
       "whatSupo": "¿Qué es supo.live?",
       "whatSupoBody": "Supo.live promociona un servicio de recorte alojado tanto para grabaciones como para transmisiones en curso. Su página de inicio anuncia recorte en vivo, subtítulos con estilo, seguimiento de rostros, un editor en el navegador y publicaciones programadas en TikTok, YouTube Shorts y X. Eso hace de la publicación en vivo su diferencia más clara. Mira el <site>resumen oficial de funciones de supo.live</site>."
     },
@@ -306,7 +306,7 @@
     "sources": {
       "heading": "Fuentes",
       "opus": "Centro de ayuda de OpusClip: <plans>Planes y créditos</plans> y <watermark>Marca de agua</watermark>. Los planes pueden cambiar; confirma los detalles actuales en <site>opus.pro</site>.",
-      "supoclip": "Cortador 9:16: <repo>repositorio público</repo>, incluidos <compose>docker-compose.yml</compose>, <config>documentación de configuración</config> y <billing>reglas de facturación</billing>. Los precios alojados salen de la sección de precios de supoclip.com."
+      "supoclip": "Cortador 9:16: <repo>repositorio público</repo>, incluidos <compose>docker-compose.yml</compose>, <config>documentación de configuración</config> y <billing>reglas de facturación</billing>. Los precios alojados salen de la sección de precios de cortador916-app.vercel.app."
     }
   },
   "self-host-supoclip-docker": {
@@ -349,7 +349,7 @@
         "answer": "Crea tu cuenta, luego define DISABLE_SIGN_UP=true y vuelve a crear el contenedor del frontend. Compose ata cada puerto a 127.0.0.1, así que nada es público hasta que agregues un proxy inverso."
       }
     },
-    "intro": "Cortador 9:16 es el recortador de video con IA de código abierto detrás de la app alojada en supoclip.com. El mismo repositorio trae una pila de Docker Compose que puedes correr en una laptop, un servidor de casa o un VPS. Esta guía sigue esa pila tal como existe en el <repo>repositorio</repo>. Cuando un paso depende de tu proveedor o de tu hardware, lo decimos en lugar de adivinar.",
+    "intro": "Cortador 9:16 es el recortador de video con IA de código abierto detrás de la app alojada en cortador916-app.vercel.app. El mismo repositorio trae una pila de Docker Compose que puedes correr en una laptop, un servidor de casa o un VPS. Esta guía sigue esa pila tal como existe en el <repo>repositorio</repo>. Cuando un paso depende de tu proveedor o de tu hardware, lo decimos en lugar de adivinar.",
     "introChoice": "¿Prefieres no operar infraestructura? La <hosted>app alojada</hosted> corre el mismo proceso. ¿Todavía eliges entre herramientas? Lee primero nuestra <comparison>comparación de Cortador 9:16 frente a OpusClip</comparison>.",
     "stack": {
       "heading": "Qué estás ejecutando",
