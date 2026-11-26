@@ -200,6 +200,31 @@ export default function HomeApp() {
 
   useEffect(() => { void refreshFonts(); }, [refreshFonts]);
 
+  // Mantém a tela do celular acesa durante o envio: se a tela apagar, o navegador
+  // pausa a aba e o envio recomeça do zero.
+  useEffect(() => {
+    if (!isLoading || typeof navigator === "undefined" || !("wakeLock" in navigator)) return;
+    let lock: WakeLockSentinel | null = null;
+    let cancelled = false;
+    const acquire = async () => {
+      try {
+        const next = await navigator.wakeLock.request("screen");
+        if (cancelled) { void next.release(); return; }
+        lock = next;
+      } catch {
+        // Sem permissão ou sem suporte: segue sem manter a tela acesa.
+      }
+    };
+    const onVisible = () => { if (document.visibilityState === "visible") void acquire(); };
+    void acquire();
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
+      void lock?.release();
+    };
+  }, [isLoading]);
+
   useEffect(() => {
     fetch("/api/caption-templates")
       .then((response) => (response.ok ? response.json() : null))
