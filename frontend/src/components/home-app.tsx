@@ -58,6 +58,10 @@ function formatBytes(bytes: number) {
   return `${Math.max(1, Math.round(bytes / 1e6))} MB`;
 }
 
+// Link do YouTube desligado por padrão: o YouTube bloqueia IP de servidor.
+// Para religar: NEXT_PUBLIC_YOUTUBE_LINK=on na Vercel.
+const YOUTUBE_LINK_ENABLED = process.env.NEXT_PUBLIC_YOUTUBE_LINK === "on";
+
 function greetingText(t: ReturnType<typeof useTranslations<"home">>, name?: string | null) {
   const hour = new Date().getHours();
   const key = hour < 5 ? "upLate" : hour < 12 ? "goodMorning" : hour < 18 ? "goodAfternoon" : "goodEvening";
@@ -457,6 +461,17 @@ export default function HomeApp() {
                     <X className="size-4" />
                   </button>
                 </div>
+              ) : !YOUTUBE_LINK_ENABLED ? (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={controlsDisabled}
+                  aria-describedby="source-limits"
+                  className="flex min-w-0 flex-1 items-center gap-3 rounded-xl bg-muted/60 p-2 pr-3 text-left hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-foreground text-background"><Upload className="size-5" /></span>
+                  <span className="min-w-0 flex-1 text-base text-muted-foreground">{t("uploadFile")}</span>
+                </button>
               ) : (
                 <>
                   {youtubeThumbnailUrl ? (
@@ -487,7 +502,7 @@ export default function HomeApp() {
             </div>
 
             <div className="flex flex-wrap items-center gap-1 px-3 pb-3 sm:px-4">
-              {!file && (
+              {!file && YOUTUBE_LINK_ENABLED && (
                 <Chip onClick={() => fileInputRef.current?.click()} disabled={controlsDisabled} aria-label={t("uploadFile")} aria-describedby="source-limits">
                   <Paperclip className="size-3.5" /><span className="hidden sm:inline">{t("upload")}</span>
                 </Chip>

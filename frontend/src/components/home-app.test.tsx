@@ -4,6 +4,9 @@ import { beforeEach, expect, it, vi } from "vitest";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HomeApp from "./home-app";
 
+// O campo do link só aparece com NEXT_PUBLIC_YOUTUBE_LINK=on (avaliado ao importar o módulo).
+vi.hoisted(() => { process.env.NEXT_PUBLIC_YOUTUBE_LINK = "on"; });
+
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
