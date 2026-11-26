@@ -6,24 +6,24 @@ Cortador 9:16 can be used as a hosted web application, as a native iOS app, or s
 
 ## Canonical website
 
-- [Cortador 9:16](https://www.supoclip.com/): Product overview, features, pricing, and hosted application access.
+- [Cortador 9:16](https://cortador916-app.vercel.app/): Product overview, features, pricing, and hosted application access.
 - [GitHub repository](https://github.com/FujiwaraChoki/supoclip): Source code, setup instructions, architecture, license, and contribution history.
 - [Cortador 9:16 for iOS](https://apps.apple.com/us/app/supoclip/id6784760040): Native iPhone app on the App Store, backed by the hosted service.
 
 ## Product pages
 
-- [AI video clipper](https://www.supoclip.com/ai-video-clipper): AI-assisted highlight detection, virality scoring, captions, and exports.
-- [Open-source video clipper](https://www.supoclip.com/open-source-video-clipper): Self-hosting, source access, provider choice, and deployment tradeoffs.
-- [YouTube Shorts clipper](https://www.supoclip.com/youtube-shorts-clipper): Workflow for repurposing long YouTube videos into vertical Shorts.
-- [Demo](https://www.supoclip.com/demo): Real clips generated from a long-form interview, with source timestamps and pipeline steps.
+- [AI video clipper](https://cortador916-app.vercel.app/ai-video-clipper): AI-assisted highlight detection, virality scoring, captions, and exports.
+- [Open-source video clipper](https://cortador916-app.vercel.app/open-source-video-clipper): Self-hosting, source access, provider choice, and deployment tradeoffs.
+- [YouTube Shorts clipper](https://cortador916-app.vercel.app/youtube-shorts-clipper): Workflow for repurposing long YouTube videos into vertical Shorts.
+- [Demo](https://cortador916-app.vercel.app/demo): Real clips generated from a long-form interview, with source timestamps and pipeline steps.
 
 ## Guides and comparisons
 
-- [Cortador 9:16 Blog](https://www.supoclip.com/blog): Product comparisons and practical video-clipping workflows.
-- [Self-host Cortador 9:16 with Docker Compose](https://www.supoclip.com/blog/self-host-supoclip-docker): Requirements, environment setup, fully local Whisper + Ollama option, and production checklist.
-- [Cortador 9:16 vs OpusClip](https://www.supoclip.com/blog/supoclip-vs-opusclip): Sourced comparison of deployment, pricing model, watermarks, and workflow.
-- [Best free, self-hosted OpusClip alternative](https://www.supoclip.com/blog/best-free-opusclip-alternative): When self-hosting the open-source app beats a credit-based tool.
-- [Cortador 9:16 vs supo.live](https://www.supoclip.com/blog/supoclip-vs-supo-live): Open-source control compared with a hosted live-clipping service.
+- [Cortador 9:16 Blog](https://cortador916-app.vercel.app/blog): Product comparisons and practical video-clipping workflows.
+- [Self-host Cortador 9:16 with Docker Compose](https://cortador916-app.vercel.app/blog/self-host-supoclip-docker): Requirements, environment setup, fully local Whisper + Ollama option, and production checklist.
+- [Cortador 9:16 vs OpusClip](https://cortador916-app.vercel.app/blog/supoclip-vs-opusclip): Sourced comparison of deployment, pricing model, watermarks, and workflow.
+- [Best free, self-hosted OpusClip alternative](https://cortador916-app.vercel.app/blog/best-free-opusclip-alternative): When self-hosting the open-source app beats a credit-based tool.
+- [Cortador 9:16 vs supo.live](https://cortador916-app.vercel.app/blog/supoclip-vs-supo-live): Open-source control compared with a hosted live-clipping service.
 
 ## Key capabilities
 
@@ -49,7 +49,7 @@ Cortador 9:16 can be used as a hosted web application, as a native iOS app, or s
 ## Publisher
 
 - Name: Cortador 9:16 Team
-- Website: https://www.supoclip.com/
+- Website: https://cortador916-app.vercel.app/
 - Source: https://github.com/FujiwaraChoki/supoclip
 - Contact: support@supoclip.com
 - Last reviewed: 2026-10-05
