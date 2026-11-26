@@ -1,5 +1,8 @@
 import { parseApiError, formatSupportMessage } from "@/lib/api-error";
+import { uploadVideoInChunks, type UploadProgressHandler } from "@/lib/chunked-upload";
 import { isYouTubeHost, youtubeVideoId } from "@/lib/youtube-url";
+
+export type { UploadProgressHandler };
 
 /** Default upload cap: 4 GB. Matches the backend MAX_VIDEO_UPLOAD_BYTES default. */
 export const DEFAULT_MAX_VIDEO_UPLOAD_BYTES = 4_000_000_000;
@@ -105,6 +108,7 @@ async function requestUploadAuthorization(file: File): Promise<UploadAuthorizati
 export async function uploadVideoFile(
   file: File,
   maxBytes: number = maxVideoUploadBytes(),
+  onProgress?: UploadProgressHandler,
 ): Promise<string> {
   if (file.size > maxBytes) {
     throw new Error(uploadTooLargeMessage(maxBytes, file.size));
@@ -118,6 +122,25 @@ export async function uploadVideoFile(
     return uploadVideoFileViaProxy(file, maxBytes);
   }
 
+  // Small parts get past proxies that cap a request body (the free Cloudflare
+  // tunnel allows 100 MB) and survive a dropped connection.
+  const chunkedPath = await uploadVideoInChunks(file, {
+    uploadUrl: uploadAuthorization.uploadUrl,
+    headers: uploadAuthorization.headers,
+    refreshHeaders: async () => {
+      try {
+        const fresh = await requestUploadAuthorization(file);
+        return "directUpload" in fresh && fresh.directUpload ? fresh.headers : null;
+      } catch {
+        return null;
+      }
+    },
+    tooLargeMessage: uploadTooLargeMessage(maxBytes),
+    onProgress,
+  });
+  if (chunkedPath !== null) return chunkedPath;
+
+  // A backend without the chunked endpoints takes the whole file in one request.
   const formData = new FormData();
   formData.append("video", file);
 

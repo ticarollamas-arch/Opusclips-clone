@@ -12,6 +12,7 @@ import re
 import uuid
 import aiofiles
 from starlette.background import BackgroundTask
+from starlette.requests import ClientDisconnect
 
 from ...config import get_config
 from ...media_storage import MediaStorage, STORAGE_ERRORS, media_work
@@ -20,6 +21,7 @@ from ...media.upload_ingest import (
     persist_upload_after_response,
     publish_spooled_upload,
 )
+from ...media.chunked_upload import ChunkedUploadError, ChunkedUploadStore
 from ...repositories.upload_repository import (
     reserve_upload,
     bind_upload,
@@ -440,6 +442,195 @@ async def upload_video(request: Request, db: AsyncSession = Depends(get_db)):
             await form_data.close()
         if published is not None and not keep_published:
             published.unlink(missing_ok=True)
+
+
+CHUNK_WRITE_BYTES = 1024 * 1024
+
+
+def _chunk_store() -> ChunkedUploadStore:
+    config = get_config()
+    return ChunkedUploadStore(
+        Path(config.temp_dir) / "uploads" / ".chunks",
+        max_bytes=config.max_video_upload_bytes,
+    )
+
+
+def _chunk_http_error(exc: ChunkedUploadError) -> HTTPException:
+    return HTTPException(status_code=exc.status_code, detail=exc.detail)
+
+
+@router.post("/upload/chunked/init")
+@media_work
+async def init_chunked_upload(request: Request, db: AsyncSession = Depends(get_db)):
+    """Open an upload that arrives in small parts (see media/chunked_upload.py).
+
+    A proxy in front of the API can cap a request body (the free Cloudflare
+    tunnel allows 100 MB). Parts stay far below any such cap.
+    """
+    user_id = await _get_authenticated_user_id(request, db)
+    try:
+        payload = await request.json()
+    except ValueError:
+        raise HTTPException(status_code=400, detail="A JSON body is required") from None
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="A JSON body is required")
+    filename = payload.get("filename")
+    if not isinstance(filename, str) or not filename.strip():
+        raise HTTPException(status_code=400, detail="A filename is required")
+    content_type = payload.get("contentType") or ""
+    if not isinstance(content_type, str) or len(content_type) > 128:
+        raise HTTPException(status_code=400, detail="Invalid content type")
+    extension = MediaStorage.video_extension(filename, content_type)
+    try:
+        session = await run_in_thread(
+            _chunk_store().begin, user_id, extension, payload.get("size")
+        )
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    return {
+        "upload_id": session.upload_id,
+        "chunk_size": session.chunk_size,
+        "total_parts": session.total_parts,
+        "received": [],
+    }
+
+
+@router.put("/upload/chunked/{upload_id}/parts/{index}")
+@media_work
+async def upload_chunked_part(
+    upload_id: str, index: int, request: Request, db: AsyncSession = Depends(get_db)
+):
+    """Store one part at its offset. Sending a part again replaces it."""
+    user_id = await _get_authenticated_user_id(request, db)
+    store = _chunk_store()
+    try:
+        session = await run_in_thread(store.load, upload_id, user_id)
+        writer = await run_in_thread(store.open_part, session, index)
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    committed = False
+    try:
+        declared = request.headers.get("content-length", "")
+        if declared.isdigit() and int(declared) > writer.expected:
+            raise HTTPException(status_code=413, detail="The part is larger than expected.")
+        pending = bytearray()
+        async for chunk in request.stream():
+            pending += chunk
+            if len(pending) >= CHUNK_WRITE_BYTES:
+                await run_in_thread(writer.write, bytes(pending))
+                pending.clear()
+        if pending:
+            await run_in_thread(writer.write, bytes(pending))
+        await run_in_thread(writer.commit)
+        committed = True
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    except ClientDisconnect:
+        # The connection dropped mid-part; the client sends this part again.
+        logger.info("Upload part %s was interrupted by the client", index)
+        raise HTTPException(status_code=400, detail="Upload interrupted") from None
+    finally:
+        if not committed:
+            writer.abort()
+    received = await run_in_thread(store.received_parts, session)
+    return {"index": index, "received": len(received), "total_parts": session.total_parts}
+
+
+@router.get("/upload/chunked/{upload_id}")
+async def chunked_upload_status(
+    upload_id: str, request: Request, db: AsyncSession = Depends(get_db)
+):
+    """Which parts the server already has, so a client can send only the rest."""
+    user_id = await _get_authenticated_user_id(request, db)
+    store = _chunk_store()
+    try:
+        session = await run_in_thread(store.load, upload_id, user_id)
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    return {
+        "upload_id": session.upload_id,
+        "chunk_size": session.chunk_size,
+        "total_parts": session.total_parts,
+        "received": await run_in_thread(store.received_parts, session),
+        "completed": (await run_in_thread(store.completed_result, session)) is not None,
+    }
+
+
+@router.post("/upload/chunked/{upload_id}/complete")
+@media_work
+async def complete_chunked_upload(
+    upload_id: str, request: Request, db: AsyncSession = Depends(get_db)
+):
+    """Check that every part arrived, then store the video like a regular upload.
+
+    Asking again after a lost response returns the same video path.
+    """
+    user_id = await _get_authenticated_user_id(request, db)
+    config = get_config()
+    store = _chunk_store()
+    idempotency_key = _idempotency_key(request)
+    try:
+        session = await run_in_thread(store.load, upload_id, user_id)
+        lock = await run_in_thread(store.acquire_lock, session)
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    published: Path | None = None
+    try:
+        stored = await run_in_thread(store.completed_result, session)
+        if stored:
+            return {"message": "Video uploaded successfully", "video_path": stored}
+        unique_filename = f"{uuid.uuid4()}{session.extension}"
+        published = Path(config.temp_dir) / "uploads" / unique_filename
+        video_path = f"upload://{unique_filename}"
+        digest, size = await run_in_thread(store.publish, session, published)
+        claimed_path, created = await claim_stored_upload(
+            db, user_id, size, digest, video_path, idempotency_key, config,
+        )
+        if claimed_path != video_path:
+            # These bytes were stored before: keep that path and drop this copy.
+            published.unlink(missing_ok=True)
+        published = None
+        await run_in_thread(store.mark_completed, session, claimed_path)
+        logger.info("Chunked video stored as %s", claimed_path.removeprefix("upload://"))
+        payload = {"message": "Video uploaded successfully", "video_path": claimed_path}
+        if created and MediaStorage().enabled:
+            return JSONResponse(
+                payload,
+                background=BackgroundTask(persist_upload_after_response, claimed_path),
+            )
+        return payload
+    except ChunkedUploadError as exc:
+        raise _chunk_http_error(exc) from None
+    except UploadIdempotencyConflict as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from None
+    except UploadLimitReached as exc:
+        raise HTTPException(429, str(exc)) from None
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from None
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error("Error completing chunked upload: %s", exc)
+        raise HTTPException(status_code=500, detail=f"Error uploading video: {str(exc)}")
+    finally:
+        if published is not None:
+            published.unlink(missing_ok=True)
+        await run_in_thread(store.release_lock, lock)
+
+
+@router.delete("/upload/chunked/{upload_id}")
+async def abort_chunked_upload(
+    upload_id: str, request: Request, db: AsyncSession = Depends(get_db)
+):
+    """Free the disk space of an upload the client gave up on."""
+    user_id = await _get_authenticated_user_id(request, db)
+    store = _chunk_store()
+    try:
+        session = await run_in_thread(store.load, upload_id, user_id)
+    except ChunkedUploadError:
+        return {"message": "Upload cancelled"}  # already gone
+    await run_in_thread(store.discard, session.upload_id)
+    return {"message": "Upload cancelled"}
 
 
 @router.post("/upload/authorize")

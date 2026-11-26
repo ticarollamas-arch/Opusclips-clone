@@ -343,8 +343,11 @@ export default function HomeApp() {
       const normalizedFilteredWords = filteredWords.split(",").map((word) => word.trim().toLowerCase()).filter(Boolean);
 
       if (sourceType === "upload" && file) {
-        setStatusMessage(t("status.uploading"));
-        videoUrl = await uploadVideoFile(file, uploadLimitBytes);
+        const uploadingLabel = t("status.uploading");
+        setStatusMessage(uploadingLabel);
+        videoUrl = await uploadVideoFile(file, uploadLimitBytes, (fraction) => {
+          setStatusMessage(`${uploadingLabel} ${Math.round(fraction * 100)}%`);
+        });
       }
 
       setStatusMessage(sourceType === "youtube" ? t("status.checkingLength") : t("status.starting"));

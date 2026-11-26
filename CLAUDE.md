@@ -163,7 +163,12 @@ PostgreSQL 15. Schema in `init.sql`. Mixed naming conventions:
 
 **Media:**
 - `GET /fonts`, `GET /transitions`, `GET /caption-templates`, `GET /broll/status`
-- `POST /upload` — Upload video file
+- `POST /upload` — Upload video file (single request)
+- `POST /upload/chunked/init` → `PUT /upload/chunked/{id}/parts/{n}` (8 MiB each) → `POST /upload/chunked/{id}/complete`;
+  `GET`/`DELETE /upload/chunked/{id}` for status/cancel. The web app uses this path so a proxy with a body cap (the free
+  Cloudflare tunnel allows 100 MB) never sees a big request; parts are written at their offset in one sparse file under
+  `uploads/.chunks/` and `complete` returns the same `upload://` path as `/upload`. Logic in `media/chunked_upload.py`,
+  client in `frontend/src/lib/chunked-upload.ts` (retries, waits while the tab is hidden, falls back to `/upload` on 404)
 - `GET /clips/{filename}` — Serve generated clips
 
 **Social publishing:**
