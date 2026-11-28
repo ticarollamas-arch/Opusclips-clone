@@ -2,6 +2,10 @@
 
 # SupoClip — cortes virais de vídeos longos com IA (cópia auto-hospedável)
 
+<!-- vercel-demo:start -->
+<p align="center"><a href="https://cortador916-app.vercel.app"><img src="https://img.shields.io/badge/Abrir_o_site-cortador916--app.vercel.app-22D3EE?logo=vercel&logoColor=white&labelColor=0B1220" alt="Abrir o site cortador916-app.vercel.app"></a></p>
+<!-- vercel-demo:end -->
+
 Cópia do projeto de código aberto **[SupoClip](https://github.com/FujiwaraChoki/supoclip)**, uma ferramenta que transforma **vídeos longos** (podcasts, palestras, VODs) em **cortes verticais 9:16** prontos para TikTok, Reels e Shorts. Com IA, ela encontra os trechos com mais potencial, dá uma nota de viralidade a cada um e renderiza os clipes com enquadramento no rosto, legendas sincronizadas por palavra, título de abertura e B-roll opcional. É uma alternativa auto-hospedável e sem marca d'água a serviços como o OpusClip.
 
 Documentação original em inglês: [README-en.md](README-en.md) e pasta [docs/](docs/README.md).
